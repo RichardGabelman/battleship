@@ -1,18 +1,19 @@
 export class Ship {
+  #numHits;
   constructor(length) {
     this.length = length;
-    this.numHits = 0;
+    this.#numHits = 0;
   }
 
   get hits() {
-    return this.numHits;
-  }
-
-  set hits(num) {
-    this.numHits = num;
+    return this.#numHits;
   }
 
   hit() {
-    this.numHits++;
+    this.#numHits++;
+  }
+
+  isSunk() {
+    return this.hits >= this.length;
   }
 }
