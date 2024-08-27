@@ -13,7 +13,7 @@ describe("isSunk()", () => {
     const testShip = new Ship(4);
     expect(testShip.isSunk()).toBe(false);
   });
-  test("ships of size 4 are sunk after 4 hits", () => {
+  test("ships of length x are sunk after x hits", () => {
     const testShip = new Ship(4);
     testShip.hit();
     testShip.hit();
