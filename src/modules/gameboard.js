@@ -113,4 +113,15 @@ export class Gameboard {
     }
     return true;
   }
+
+  allSunk() {
+    for (let i = 0; i < BOARD_SIZE; i++) {
+      for (let j = 0; j < BOARD_SIZE; j++) {
+        if (typeof this.#board[i][j] === "object") {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 }

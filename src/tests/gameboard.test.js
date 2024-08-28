@@ -101,3 +101,22 @@ describe("recieveAttack()", () => {
     expect(testBoard.recieveAttack([0, 5])).toBe(false);
   });
 });
+
+describe("allSunk()", () => {
+  test("no ships placed means all are sunk", () => {
+    const testBoard = new Gameboard();
+    expect(testBoard.allSunk()).toBe(true);
+  });
+  test("allSunk is false when ships are still alive", () => {
+    const testBoard = new Gameboard();
+    testBoard.placeShip([0,0], [0,1]);
+    expect(testBoard.allSunk()).toBe(false);
+  });
+  test("ships that have been hit on every section are considered sunk", () => {
+    const testBoard = new Gameboard();
+    testBoard.placeShip([0,0], [0,1]);
+    testBoard.recieveAttack([0,0]);
+    testBoard.recieveAttack([0,1]);
+    expect(testBoard.allSunk()).toBe(true);
+  });
+});
