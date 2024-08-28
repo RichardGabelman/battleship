@@ -28,10 +28,9 @@ describe("get board()", () => {
 describe("placeShip()", () => {
   test("placed ship is correctly represented on the board", () => {
     const testBoard = new Gameboard();
-    const ship = new Ship(5);
     testBoard.placeShip([0,0], [0,4]);
     expect(testBoard.board).toEqual([
-      [ship, ship, ship, ship, ship, "🌊", "🌊", "🌊", "🌊", "🌊"],
+      ["🚢", "🚢", "🚢", "🚢", "🚢", "🌊", "🌊", "🌊", "🌊", "🌊"],
       ["🌊", "🌊", "🌊", "🌊", "🌊", "🌊", "🌊", "🌊", "🌊", "🌊"],
       ["🌊", "🌊", "🌊", "🌊", "🌊", "🌊", "🌊", "🌊", "🌊", "🌊"],
       ["🌊", "🌊", "🌊", "🌊", "🌊", "🌊", "🌊", "🌊", "🌊", "🌊"],

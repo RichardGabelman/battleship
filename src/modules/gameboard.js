@@ -3,6 +3,10 @@ import { Ship } from "./ship.js";
 export const BOARD_SIZE = 10;
 
 export class Gameboard {
+  // Tile options:
+  // 🌊 open water
+  // Ship object becomes 🚢
+  // 💥 damaged ship section
   #board;
   constructor() {
     let arr = new Array(BOARD_SIZE);
@@ -18,7 +22,14 @@ export class Gameboard {
   get board() {
     let copy = new Array(BOARD_SIZE);
     for (let i = 0; i < BOARD_SIZE; i++) {
-      copy[i] = [...this.#board[i]];
+      copy[i] = [];
+      for (let j = 0; j < BOARD_SIZE; j++) {
+        if (typeof this.#board[i][j] === "object") {
+          copy[i][j] = "🚢";
+        } else {
+          copy[i][j] = this.#board[i][j];
+        }
+      }
     }
     return copy;
   }
