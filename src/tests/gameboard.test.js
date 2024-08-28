@@ -1,5 +1,4 @@
-import { Gameboard, BOARD_SIZE } from "../modules/gameboard.js";
-import { Ship } from "../modules/ship.js";
+import { Gameboard, BOARD_SIZE, SHIP_EMOJI, EMPTY_SPACE_EMOJI, DAMAGED_SHIP_EMOJI, MISS_EMOJI } from "../modules/gameboard.js";
 
 describe("get board()", () => {
   test("new Gameboard contains 'empty' board", () => {
@@ -68,5 +67,37 @@ describe("placeShip()", () => {
     boardOne.placeShip([0, 0], [2, 0]);
     boardTwo.placeShip([2, 0], [0, 0]);
     expect(boardOne.board).toEqual(boardTwo.board);
+  });
+});
+
+describe("recieveAttack()", () => {
+  test("on-target attack is rendered", () => {
+    const testBoard = new Gameboard();
+    testBoard.placeShip([0,0], [0,1]);
+    testBoard.recieveAttack([0, 0]);
+    expect(testBoard.board[0][0]).toBe(DAMAGED_SHIP_EMOJI);
+  });
+  test("missed attack is rendered", () => {
+    const testBoard = new Gameboard();
+    testBoard.placeShip([0,0], [0,1]);
+    testBoard.recieveAttack([0, 5]);
+    expect(testBoard.board[0][5]).toBe(MISS_EMOJI);
+  });
+  test("hits off the board aren't allowed", () => {
+    const testBoard = new Gameboard();
+    testBoard.placeShip([0,0], [0,1]);
+    testBoard.recieveAttack([-1, 5]);
+    expect(testBoard.recieveAttack([-1, 5])).toBe(false);
+    expect(testBoard.recieveAttack([0, -1])).toBe(false);
+    expect(testBoard.recieveAttack([BOARD_SIZE, 5])).toBe(false);
+    expect(testBoard.recieveAttack([5, BOARD_SIZE])).toBe(false);
+  });
+  test("attacks on previously attacked places aren't allowed", () => {
+    const testBoard = new Gameboard();
+    testBoard.placeShip([0,0], [0,1]);
+    testBoard.recieveAttack([0, 0]);
+    testBoard.recieveAttack([0, 5]);
+    expect(testBoard.recieveAttack([0, 0])).toBe(false);
+    expect(testBoard.recieveAttack([0, 5])).toBe(false);
   });
 });
