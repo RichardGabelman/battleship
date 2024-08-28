@@ -1,4 +1,4 @@
-const BOARD_SIZE = 10;
+export const BOARD_SIZE = 10;
 
 export class Gameboard {
   #board;
@@ -19,5 +19,44 @@ export class Gameboard {
       copy[i] = [...this.#board[i]];
     }
     return copy;
+  }
+
+  // returns true if ship was successfully placed
+  // coords are inclusive
+  // ex. [0, 0] && [0, 2]
+  // [[🚢, 🚢, 🚢, ...]]
+  placeShip(coordOne, coordTwo) {
+    const [y1, x1] = coordOne;
+    const [y2, x2] = coordTwo;
+
+    // no placing ships outside of the board
+    if (y1 < 0 || y2 < 0 || x1 < 0 || x2 < 0) {
+      return false;
+    }
+    if (y1 >= BOARD_SIZE || y2 >= BOARD_SIZE || x1 >= BOARD_SIZE || x2 >= BOARD_SIZE) {
+      return false;
+    }
+
+    // no placing ships diagonally
+    if (y1 != y2 && x1 != x2) {
+      return false;
+    }
+
+    const backupBoard = this.board;
+    const minY = Math.min(y1, y2);
+    const minX = Math.min(x1, x2);
+    const maxY = Math.max(y1, y2);
+    const maxX = Math.max(x1, x2);
+
+    for (let i = minY; i <= maxY; i++) {
+      for (let j = minX; j <= maxX; j++) {
+        if (this.#board[i][j] === "🚢") {
+          this.#board = backupBoard;
+          return false;
+        }
+        this.#board[i][j] = "🚢";
+      }
+    }
+    return true;
   }
 }
