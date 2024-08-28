@@ -1,3 +1,5 @@
+import { Ship } from "./ship.js";
+
 export const BOARD_SIZE = 10;
 
 export class Gameboard {
@@ -42,19 +44,23 @@ export class Gameboard {
       return false;
     }
 
-    const backupBoard = this.board;
     const minY = Math.min(y1, y2);
     const minX = Math.min(x1, x2);
     const maxY = Math.max(y1, y2);
     const maxX = Math.max(x1, x2);
 
+    const backupBoard = this.board;
+
+    const length = 1 + Math.max(maxX - minX, maxY - maxY);
+    const ship = new Ship(length);
+
     for (let i = minY; i <= maxY; i++) {
       for (let j = minX; j <= maxX; j++) {
-        if (this.#board[i][j] === "🚢") {
+        if (this.#board[i][j] !== "🌊") {
           this.#board = backupBoard;
           return false;
         }
-        this.#board[i][j] = "🚢";
+        this.#board[i][j] = ship;
       }
     }
     return true;
