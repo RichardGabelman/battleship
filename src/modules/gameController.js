@@ -1,22 +1,28 @@
 import { Player } from "./player.js";
-import { initialSetup } from "./domManager.js";
+import { initialSetup, renderBoard } from "./domManager.js";
 
 export function startGame() {
   initialSetup();
 
   const playerOne = new Player();
   const playerTwo = new Player();
+
+  const playerOneBoard = playerOne.gameboard;
+  const playerTwoBoard = playerTwo.gameboard;
   
-  playerOne.placeShip([0, 0], [0, 4]);
-  playerOne.placeShip([1, 1], [1, 4]);
-  playerOne.placeShip([2, 2], [2, 4]);
-  playerOne.placeShip([3, 3], [3, 5]);
-  playerOne.placeShip([4, 4], [4, 5]);
+  playerOneBoard.placeShip([0, 0], [0, 4]);
+  playerOneBoard.placeShip([1, 1], [1, 4]);
+  playerOneBoard.placeShip([2, 2], [2, 4]);
+  playerOneBoard.placeShip([3, 3], [3, 5]);
+  playerOneBoard.placeShip([4, 4], [4, 5]);
   
-  playerTwo.placeShip([0, 0], [0, 4]);
-  playerTwo.placeShip([1, 1], [1, 4]);
-  playerTwo.placeShip([2, 2], [2, 4]);
-  playerTwo.placeShip([3, 3], [3, 5]);
-  playerTwo.placeShip([4, 4], [4, 5]);
+  playerTwoBoard.placeShip([0, 0], [0, 4]);
+  playerTwoBoard.placeShip([1, 1], [1, 4]);
+  playerTwoBoard.placeShip([2, 2], [2, 4]);
+  playerTwoBoard.placeShip([3, 3], [3, 5]);
+  playerTwoBoard.placeShip([4, 4], [4, 5]);
+
+  renderBoard(playerOne, "user");
+  renderBoard(playerTwo, "computer");
 }
 
