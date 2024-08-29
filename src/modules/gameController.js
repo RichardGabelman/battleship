@@ -34,12 +34,21 @@ export function startGame() {
   const enemyTiles = document.querySelectorAll(".computer .tiles");
   for (const tile of enemyTiles) {
     tile.addEventListener("click", () => {
+      // TODO: Maybe make getting the info from the tile
+      // and trying to use it in recieveAttack a 
+      // separate function
       const yVal = tile.getAttribute("data-y");
       const xVal = tile.getAttribute("data-x");
       if (!playerTwoBoard.recieveAttack([yVal, xVal])) {
         return;
       }
       renderBoard(playerTwo, "computer");
+
+      // TODO: Have the computer randomly find a tile
+      // on the human board to attack.
+      // Maybe track which human tiles have been hit to
+      // ensure no duplicate hits but first try 
+      // just brute force randomization and checking
     });
   }
 }
