@@ -38,7 +38,7 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
 }
 
 h2 {
@@ -58,13 +58,21 @@ h2 {
 
 .tile {
   border: 1px dashed black;
-  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 2.6rem;
+  user-select: none;
 }
 
-.tile:hover {
-  background-color: rgb(106, 196, 252);
+.user {
+  cursor: default;
+}
+
+.computer .tile {
+  cursor: pointer;
+}
+
+.computer .tile:hover {
+  background-color: rgb(94, 172, 221);
 }
