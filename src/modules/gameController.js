@@ -9,14 +9,14 @@ export function startGame() {
 
   const playerOneBoard = playerOne.gameboard;
   const playerTwoBoard = playerTwo.gameboard;
-  
+
   // place ship process
   playerOneBoard.placeShip([0, 0], [0, 4]);
   playerOneBoard.placeShip([1, 1], [1, 4]);
   playerOneBoard.placeShip([2, 2], [2, 4]);
   playerOneBoard.placeShip([3, 3], [3, 5]);
   playerOneBoard.placeShip([4, 4], [4, 5]);
-  
+
   playerTwoBoard.placeShip([0, 0], [0, 4]);
   playerTwoBoard.placeShip([1, 1], [1, 4]);
   playerTwoBoard.placeShip([2, 2], [2, 4]);
@@ -31,5 +31,15 @@ export function startGame() {
   // to strike a random place on user's board
   // + render both. Check win after user's strike and
   // after enemy strike.
+  const enemyTiles = document.querySelectorAll(".computer .tiles");
+  for (const tile of enemyTiles) {
+    tile.addEventListener("click", () => {
+      const yVal = tile.getAttribute("data-y");
+      const xVal = tile.getAttribute("data-x");
+      if (!playerTwoBoard.recieveAttack([yVal, xVal])) {
+        return;
+      }
+      renderBoard(playerTwo, "computer");
+    });
+  }
 }
-

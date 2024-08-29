@@ -22,6 +22,8 @@ export function renderBoard(player, type) {
     for (let j = 0; j < BOARD_SIZE; j++) {
       const tile = document.createElement("div");
       tile.classList.add("tile");
+      tile.setAttribute("data-y", i);
+      tile.setAttribute("data-x", j);
       let emoji = board[i][j];
       if (type === "computer") {
         if (board[i][j] === SHIP_EMOJI) {
