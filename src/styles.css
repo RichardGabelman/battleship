@@ -3,3 +3,33 @@
   margin: 0;
   padding: 0;
 }
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  background-color: midnightblue;
+}
+
+h1 {
+  color: white;
+}
+
+.boards {
+  display: flex;
+  gap: 100px;
+}
+
+.gameboard {
+  width: 600px;
+  height: 600px;
+  background-color: lightskyblue;
+  border: 6px solid white;
+}
