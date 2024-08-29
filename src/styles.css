@@ -4,6 +4,11 @@
   padding: 0;
 }
 
+:root {
+  --boardSize: 10;
+  --gameBoardSize: 600px;
+}
+
 html, body {
   width: 100%;
   min-height: 100vh;
@@ -28,8 +33,20 @@ h1 {
 }
 
 .gameboard {
-  width: 600px;
-  height: 600px;
+  display: grid;
+  grid-template-columns: repeat(var(--boardSize), 1fr);
+  grid-template-rows: repeat(var(--boardSize), 1fr);
+  width: var(--gameBoardSize);
+  height: var(--gameBoardSize);
   background-color: lightskyblue;
-  border: 6px solid white;
+  box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.4);
+}
+
+.tile {
+  border: 1px dashed black;
+  cursor: pointer;
+}
+
+.tile:hover {
+  background-color: rgb(106, 196, 252);
 }
