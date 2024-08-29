@@ -10,6 +10,7 @@ export function startGame() {
   const playerOneBoard = playerOne.gameboard;
   const playerTwoBoard = playerTwo.gameboard;
   
+  // place ship process
   playerOneBoard.placeShip([0, 0], [0, 4]);
   playerOneBoard.placeShip([1, 1], [1, 4]);
   playerOneBoard.placeShip([2, 2], [2, 4]);
@@ -24,5 +25,11 @@ export function startGame() {
 
   renderBoard(playerOne, "user");
   renderBoard(playerTwo, "computer");
+
+  // TODO: Setup enemy tile event listeners that allows
+  // user to strike spots AND then will call enemy turn
+  // to strike a random place on user's board
+  // + render both. Check win after user's strike and
+  // after enemy strike.
 }
 
