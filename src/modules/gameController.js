@@ -33,7 +33,7 @@ export function startGame() {
   // + render both. Check win after user's strike and
   // after enemy strike.
   const enemyBoard = document.querySelector(".computer");
-  enemyBoard.addEventListener("click", (e) => {
+  enemyBoard.addEventListener("click", function playRound(e) {
     const tile = e.target;
     // if recieveAttack returns false, the attack didn't go through
     if (!playerTwoBoard.recieveAttack(getHumanChoice(tile))) {
@@ -42,6 +42,7 @@ export function startGame() {
     renderBoard(playerTwo, "computer");
     if (playerTwoBoard.allSunk()) {
       console.log("User won");
+      enemyBoard.removeEventListener("click", playRound);
     }
 
     // TODO: Have the computer randomly find a tile
@@ -50,15 +51,16 @@ export function startGame() {
     // ensure no duplicate hits but first try 
     // just brute force randomization and checking
 
-    let compChoice = getComputerChoice();
-    let validHit = playerOneBoard.recieveAttack(compChoice);
+    let validHit = playerOneBoard.recieveAttack(getComputerChoice());
     while (!validHit) {
-      compChoice = getComputerChoice();
-      validHit = playerOneBoard.recieveAttack(compChoice);
+      validHit = playerOneBoard.recieveAttack(getComputerChoice());
     }
-    playerOneBoard.recieveAttack(compChoice);
     renderBoard(playerOne, "user");
-  })
+    if (playerOneBoard.allSunk()) {
+      console.log("Computer won");
+      enemyBoard.removeEventListener("click", playRound);
+    }
+  });
 }
 
 function getHumanChoice(tile) {
