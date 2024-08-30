@@ -64,7 +64,7 @@ export function startGame() {
 }
 
 function getComputerChoice() {
-  const y = Math.random() * BOARD_SIZE;
-  const x = Math.random() * BOARD_SIZE;
+  const y = Math.round(Math.random() * BOARD_SIZE);
+  const x = Math.round(Math.random() * BOARD_SIZE);
   return [y, x];
 }
