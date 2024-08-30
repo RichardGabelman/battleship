@@ -32,34 +32,33 @@ export function startGame() {
   // to strike a random place on user's board
   // + render both. Check win after user's strike and
   // after enemy strike.
-  const enemyTiles = document.querySelectorAll(".computer .tile");
-  for (const tile of enemyTiles) {
-    tile.addEventListener("click", () => {
-      // if recieveAttack returns false, the attack didn't go through
-      if (!playerTwoBoard.recieveAttack(getHumanChoice(tile))) {
-        return;
-      }
-      renderBoard(playerTwo, "computer");
-      if (playerTwoBoard.allSunk()) {
-        console.log("User won");
-      }
+  const enemyBoard = document.querySelector(".computer");
+  enemyBoard.addEventListener("click", (e) => {
+    const tile = e.target;
+    // if recieveAttack returns false, the attack didn't go through
+    if (!playerTwoBoard.recieveAttack(getHumanChoice(tile))) {
+      return;
+    }
+    renderBoard(playerTwo, "computer");
+    if (playerTwoBoard.allSunk()) {
+      console.log("User won");
+    }
 
-      // TODO: Have the computer randomly find a tile
-      // on the human board to attack.
-      // Maybe track which human tiles have been hit to
-      // ensure no duplicate hits but first try 
-      // just brute force randomization and checking
+    // TODO: Have the computer randomly find a tile
+    // on the human board to attack.
+    // Maybe track which human tiles have been hit to
+    // ensure no duplicate hits but first try 
+    // just brute force randomization and checking
 
-      let compChoice = getComputerChoice();
-      let validHit = playerOneBoard.recieveAttack(compChoice);
-      while (!validHit) {
-        compChoice = getComputerChoice();
-        validHit = playerOneBoard.recieveAttack(compChoice);
-      }
-      playerOneBoard.recieveAttack(compChoice);
-      renderBoard(playerOne, "user");
-    });
-  }
+    let compChoice = getComputerChoice();
+    let validHit = playerOneBoard.recieveAttack(compChoice);
+    while (!validHit) {
+      compChoice = getComputerChoice();
+      validHit = playerOneBoard.recieveAttack(compChoice);
+    }
+    playerOneBoard.recieveAttack(compChoice);
+    renderBoard(playerOne, "user");
+  })
 }
 
 function getHumanChoice(tile) {
