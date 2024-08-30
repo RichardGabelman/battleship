@@ -4,7 +4,7 @@ export const BOARD_SIZE = 10;
 export const SHIP_EMOJI = "🚢";
 export const EMPTY_SPACE_EMOJI = "🌊";
 export const DAMAGED_SHIP_EMOJI = "💥";
-export const MISS_EMOJI = "💦";
+export const MISS_EMOJI = "💨";
 
 export class Gameboard {
   // Tile options:
