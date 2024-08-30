@@ -35,15 +35,14 @@ export function startGame() {
   const enemyTiles = document.querySelectorAll(".computer .tile");
   for (const tile of enemyTiles) {
     tile.addEventListener("click", () => {
-      // TODO: Maybe make getting the info from the tile
-      // and trying to use it in recieveAttack a 
-      // separate function
-      const yVal = tile.getAttribute("data-y");
-      const xVal = tile.getAttribute("data-x");
-      if (!playerTwoBoard.recieveAttack([yVal, xVal])) {
+      // if recieveAttack returns false, the attack didn't go through
+      if (!playerTwoBoard.recieveAttack(getHumanChoice(tile))) {
         return;
       }
       renderBoard(playerTwo, "computer");
+      if (playerTwoBoard.allSunk()) {
+        console.log("User won");
+      }
 
       // TODO: Have the computer randomly find a tile
       // on the human board to attack.
@@ -61,6 +60,12 @@ export function startGame() {
       renderBoard(playerOne, "user");
     });
   }
+}
+
+function getHumanChoice(tile) {
+  const yVal = tile.getAttribute("data-y");
+  const xVal = tile.getAttribute("data-x");
+  return [yVal, xVal];
 }
 
 function getComputerChoice() {
