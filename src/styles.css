@@ -25,7 +25,8 @@ body {
 }
 
 h1 {
-  font-family: "Nimbus Mono PS", "Courier New", monospace;
+  font-family: Didot, 'Bodoni MT', 'Noto Serif Display', 'URW Palladio L', P052, Sylfaen, serif;
+  font-weight: normal;
   color: white;
   font-size: 4rem;
 }
@@ -44,6 +45,8 @@ h1 {
 }
 
 h2 {
+  font-family: Optima, Candara, 'Noto Sans', source-sans-pro, sans-serif;
+  font-weight: normal;
   color: white;
   font-size: 2rem;
 }
