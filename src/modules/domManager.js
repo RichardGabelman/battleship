@@ -26,7 +26,7 @@ export function renderBoard(player, type) {
       let emoji = board[i][j];
       if (type === "computer") {
         if (board[i][j] === SHIP_EMOJI) {
-          emoji = EMPTY_SPACE_EMOJI; 
+          emoji = EMPTY_SPACE_EMOJI;
         }
       }
       tile.textContent = emoji;

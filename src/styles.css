@@ -9,7 +9,8 @@
   --gameBoardSize: 600;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   min-height: 100vh;
 }
@@ -24,6 +25,7 @@ body {
 }
 
 h1 {
+  font-family: "Nimbus Mono PS", "Courier New", monospace;
   color: white;
   font-size: 4rem;
 }
@@ -61,7 +63,7 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: calc((var(--gameBoardSize)/15) * 1px);
+  font-size: calc((var(--gameBoardSize) / 15) * 1px);
   user-select: none;
 }
 

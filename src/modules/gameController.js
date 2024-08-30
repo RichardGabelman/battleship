@@ -48,7 +48,7 @@ export function startGame() {
     // TODO: Have the computer randomly find a tile
     // on the human board to attack.
     // Maybe track which human tiles have been hit to
-    // ensure no duplicate hits but first try 
+    // ensure no duplicate hits but first try
     // just brute force randomization and checking
 
     let validHit = playerOneBoard.recieveAttack(getComputerChoice());
