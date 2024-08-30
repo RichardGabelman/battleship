@@ -1,5 +1,6 @@
 import { Player } from "./player.js";
 import { initialSetup, renderBoard } from "./domManager.js";
+import { BOARD_SIZE } from "./gameboard.js";
 
 export function startGame() {
   initialSetup();
@@ -31,7 +32,7 @@ export function startGame() {
   // to strike a random place on user's board
   // + render both. Check win after user's strike and
   // after enemy strike.
-  const enemyTiles = document.querySelectorAll(".computer .tiles");
+  const enemyTiles = document.querySelectorAll(".computer .tile");
   for (const tile of enemyTiles) {
     tile.addEventListener("click", () => {
       // TODO: Maybe make getting the info from the tile
@@ -49,6 +50,21 @@ export function startGame() {
       // Maybe track which human tiles have been hit to
       // ensure no duplicate hits but first try 
       // just brute force randomization and checking
+
+      let compChoice = getComputerChoice();
+      let validHit = playerOneBoard.recieveAttack(compChoice);
+      while (!validHit) {
+        compChoice = getComputerChoice();
+        validHit = playerOneBoard.recieveAttack(compChoice);
+      }
+      playerOneBoard.recieveAttack(compChoice);
+      renderBoard(playerOne, "user");
     });
   }
+}
+
+function getComputerChoice() {
+  const y = Math.random() * BOARD_SIZE;
+  const x = Math.random() * BOARD_SIZE;
+  return [y, x];
 }
