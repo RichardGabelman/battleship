@@ -20,7 +20,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 50px;
+  gap: 20px;
   background-color: midnightblue;
 }
 
@@ -37,11 +37,47 @@ h1 {
 }
 
 .grouping {
+  height: calc((var(--gameBoardSize) + 100) * 1px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 10px;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 450px;
+}
+
+button {
+  width: 250px;
+  height: 3rem;
+  outline: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  font-family: Didot, 'Bodoni MT', 'Noto Serif Display', 'URW Palladio L', P052, Sylfaen, serif;
+  border-radius: 20px;
+}
+
+#randomize {
+  background-color: white;
+}
+
+#randomize:hover {
+  background-color: rgb(211, 210, 210);
+}
+
+#start {
+  background-color: rgb(0, 150, 0);
+  color: white;
+}
+
+#start:hover {
+  background-color: rgb(0, 100, 0);
 }
 
 h2 {
@@ -58,7 +94,7 @@ h2 {
   width: calc(var(--gameBoardSize) * 1px);
   height: calc(var(--gameBoardSize) * 1px);
   background-color: lightskyblue;
-  box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.5);
 }
 
 .tile {
