@@ -2,31 +2,18 @@ import { Player } from "./player.js";
 import { initialSetup, renderBoard } from "./domManager.js";
 import { BOARD_SIZE } from "./gameboard.js";
 
+const playerOne = new Player();
+const playerTwo = new Player();
+
+const playerOneBoard = playerOne.gameboard;
+const playerTwoBoard = playerTwo.gameboard;
+
 export function startGame() {
   initialSetup();
+  boardSetup();
+}
 
-  const playerOne = new Player();
-  const playerTwo = new Player();
-
-  const playerOneBoard = playerOne.gameboard;
-  const playerTwoBoard = playerTwo.gameboard;
-
-  // place ship process
-  playerOneBoard.placeShip([0, 0], [0, 4]);
-  playerOneBoard.placeShip([1, 1], [1, 4]);
-  playerOneBoard.placeShip([2, 2], [2, 4]);
-  playerOneBoard.placeShip([3, 3], [3, 5]);
-  playerOneBoard.placeShip([4, 4], [4, 5]);
-
-  playerTwoBoard.placeShip([0, 0], [0, 4]);
-  playerTwoBoard.placeShip([1, 1], [1, 4]);
-  playerTwoBoard.placeShip([2, 2], [2, 4]);
-  playerTwoBoard.placeShip([3, 3], [3, 5]);
-  playerTwoBoard.placeShip([4, 4], [4, 5]);
-
-  renderBoard(playerOne, "user");
-  renderBoard(playerTwo, "computer");
-
+function playGame() {
   // TODO: Setup enemy tile event listeners that allows
   // user to strike spots AND then will call enemy turn
   // to strike a random place on user's board
@@ -60,6 +47,27 @@ export function startGame() {
       console.log("Computer won");
       enemyBoard.removeEventListener("click", playRound);
     }
+  });
+}
+
+function boardSetup() {
+  playerTwoBoard.generateRandomSetup();
+  renderBoard(playerTwo, "computer");
+
+  playerOneBoard.generateRandomSetup();
+  renderBoard(playerOne, "user");
+
+  const randomBtn = document.querySelector("#randomize");
+  randomBtn.addEventListener("click", () => {
+    playerOneBoard.generateRandomSetup();
+    renderBoard(playerOne, "user");
+  });
+
+  const startBtn = document.querySelector("#start");
+  startBtn.addEventListener("click", () => {
+    randomBtn.remove();
+    startBtn.remove();
+    playGame();
   });
 }
 

@@ -13,14 +13,7 @@ export class Gameboard {
   // 💥 damaged ship section
   #board;
   constructor() {
-    let arr = new Array(BOARD_SIZE);
-    for (let i = 0; i < BOARD_SIZE; i++) {
-      arr[i] = new Array(BOARD_SIZE);
-      for (let n = 0; n < BOARD_SIZE; n++) {
-        arr[i][n] = EMPTY_SPACE_EMOJI;
-      }
-    }
-    this.#board = arr;
+    this.#board = this.generateEmptyBoard();
   }
 
   get board() {
@@ -36,6 +29,17 @@ export class Gameboard {
       }
     }
     return copy;
+  }
+
+  generateEmptyBoard() {
+    let arr = new Array(BOARD_SIZE);
+    for (let i = 0; i < BOARD_SIZE; i++) {
+      arr[i] = new Array(BOARD_SIZE);
+      for (let n = 0; n < BOARD_SIZE; n++) {
+        arr[i][n] = EMPTY_SPACE_EMOJI;
+      }
+    }
+    return arr;
   }
 
   // returns true if ship was successfully placed
@@ -123,5 +127,37 @@ export class Gameboard {
       }
     }
     return true;
+  }
+
+  generateRandomSetup() {
+    this.#board = this.generateEmptyBoard();
+    this.placeRandom(5);
+    this.placeRandom(4);
+    this.placeRandom(3);
+    this.placeRandom(3);
+    this.placeRandom(2);
+  }
+
+  placeRandom(length) {
+    let successfulPlacement = false;
+    while (!successfulPlacement) {
+      const y = Math.round(Math.random() * BOARD_SIZE);
+      const x = Math.round(Math.random() * BOARD_SIZE);
+      const startCoord = [y, x];
+
+      let multiplier = 1;
+      let rand = Math.random();
+      if (rand > 0.5) {
+        multiplier = -1;
+      }
+      rand = Math.random();
+      let endCoord;
+      if (rand > 0.5) {
+        endCoord = [ y + (multiplier * (length - 1)), x];
+      } else {
+        endCoord = [y, x + (multiplier * (length - 1))];
+      }
+      successfulPlacement = this.placeShip(startCoord, endCoord);
+    }
   }
 }
