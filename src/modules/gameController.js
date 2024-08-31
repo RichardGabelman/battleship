@@ -1,65 +1,25 @@
 import { Player } from "./player.js";
-import { initialSetup, renderBoard } from "./domManager.js";
+import { initialSetup, renderBoard, displayWinner } from "./domManager.js";
 import { BOARD_SIZE } from "./gameboard.js";
 
 const playerOne = new Player();
 const playerTwo = new Player();
-
-const playerOneBoard = playerOne.gameboard;
-const playerTwoBoard = playerTwo.gameboard;
 
 export function startGame() {
   initialSetup();
   boardSetup();
 }
 
-function playGame() {
-  // TODO: Setup enemy tile event listeners that allows
-  // user to strike spots AND then will call enemy turn
-  // to strike a random place on user's board
-  // + render both. Check win after user's strike and
-  // after enemy strike.
-  const enemyBoard = document.querySelector(".computer");
-  enemyBoard.addEventListener("click", function playRound(e) {
-    const tile = e.target;
-    // if recieveAttack returns false, the attack didn't go through
-    if (!playerTwoBoard.recieveAttack(getHumanChoice(tile))) {
-      return;
-    }
-    renderBoard(playerTwo, "computer");
-    if (playerTwoBoard.allSunk()) {
-      console.log("User won");
-      enemyBoard.removeEventListener("click", playRound);
-    }
-
-    // TODO: Have the computer randomly find a tile
-    // on the human board to attack.
-    // Maybe track which human tiles have been hit to
-    // ensure no duplicate hits but first try
-    // just brute force randomization and checking
-
-    let validHit = playerOneBoard.recieveAttack(getComputerChoice());
-    while (!validHit) {
-      validHit = playerOneBoard.recieveAttack(getComputerChoice());
-    }
-    renderBoard(playerOne, "user");
-    if (playerOneBoard.allSunk()) {
-      console.log("Computer won");
-      enemyBoard.removeEventListener("click", playRound);
-    }
-  });
-}
-
 function boardSetup() {
-  playerTwoBoard.generateRandomSetup();
-  renderBoard(playerTwo, "computer");
-
-  playerOneBoard.generateRandomSetup();
+  playerOne.gameboard.generateRandomSetup();
   renderBoard(playerOne, "user");
+
+  playerTwo.gameboard.generateRandomSetup();
+  renderBoard(playerTwo, "computer");
 
   const randomBtn = document.querySelector("#randomize");
   randomBtn.addEventListener("click", () => {
-    playerOneBoard.generateRandomSetup();
+    playerOne.gameboard.generateRandomSetup();
     renderBoard(playerOne, "user");
   });
 
@@ -71,6 +31,32 @@ function boardSetup() {
   });
 }
 
+function playGame() {
+  const enemyBoard = document.querySelector(".computer");
+  enemyBoard.addEventListener("click", (e) => {
+    const tile = e.target;
+    // if recieveAttack returns false, the attack didn't go through
+    if (!playerTwo.gameboard.recieveAttack(getHumanChoice(tile))) {
+      return;
+    }
+    renderBoard(playerTwo, "computer");
+    if (playerTwo.gameboard.allSunk()) {
+      displayWinner("User");
+      return;
+    }
+
+    let validHit = playerOne.gameboard.recieveAttack(getComputerChoice());
+    while (!validHit) {
+      validHit = playerOne.gameboard.recieveAttack(getComputerChoice());
+    }
+    renderBoard(playerOne, "user");
+    if (playerOne.gameboard.allSunk()) {
+      displayWinner("Computer");
+      return;
+    }
+  });
+}
+
 function getHumanChoice(tile) {
   const yVal = tile.getAttribute("data-y");
   const xVal = tile.getAttribute("data-x");
@@ -78,7 +64,7 @@ function getHumanChoice(tile) {
 }
 
 function getComputerChoice() {
-  const y = Math.round(Math.random() * BOARD_SIZE);
-  const x = Math.round(Math.random() * BOARD_SIZE);
+  const y = Math.round(Math.random() * (BOARD_SIZE - 1));
+  const x = Math.round(Math.random() * (BOARD_SIZE - 1));
   return [y, x];
 }

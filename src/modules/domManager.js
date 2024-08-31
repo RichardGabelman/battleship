@@ -34,3 +34,10 @@ export function renderBoard(player, type) {
     }
   }
 }
+
+export function displayWinner(winner) {
+  const mainContent = document.querySelector(".boards");
+  mainContent.remove();
+  const heading = document.querySelector("h1");
+  heading.textContent = `${winner} won!`;
+}

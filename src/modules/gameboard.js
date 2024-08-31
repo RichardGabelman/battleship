@@ -121,7 +121,7 @@ export class Gameboard {
   allSunk() {
     for (let i = 0; i < BOARD_SIZE; i++) {
       for (let j = 0; j < BOARD_SIZE; j++) {
-        if (typeof this.#board[i][j] === "object") {
+        if (this.board[i][j] === SHIP_EMOJI) {
           return false;
         }
       }
@@ -141,8 +141,8 @@ export class Gameboard {
   placeRandom(length) {
     let successfulPlacement = false;
     while (!successfulPlacement) {
-      const y = Math.round(Math.random() * BOARD_SIZE);
-      const x = Math.round(Math.random() * BOARD_SIZE);
+      const y = Math.round(Math.random() * (BOARD_SIZE - 1));
+      const x = Math.round(Math.random() * (BOARD_SIZE - 1));
       const startCoord = [y, x];
 
       let multiplier = 1;
@@ -151,13 +151,21 @@ export class Gameboard {
         multiplier = -1;
       }
       rand = Math.random();
-      let endCoord;
+      let newY = y;
+      let newX = x;
       if (rand > 0.5) {
-        endCoord = [ y + (multiplier * (length - 1)), x];
+        newY = y + (multiplier * (length - 1))
       } else {
-        endCoord = [y, x + (multiplier * (length - 1))];
+        newX = x + (multiplier * (length - 1))
       }
-      successfulPlacement = this.placeShip(startCoord, endCoord);
+
+      if (newY < 0 || newX < 0) {
+        continue;
+      }
+      if (newY >= BOARD_SIZE || newX >= BOARD_SIZE) {
+        continue;
+      }
+      successfulPlacement = this.placeShip(startCoord, [newY, newX]);
     }
   }
 }
